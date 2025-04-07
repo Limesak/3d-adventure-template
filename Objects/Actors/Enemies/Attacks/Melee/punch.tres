@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AttackClass" load_steps=2 format=3 uid="uid://dim6rueaiip7j"]
+
+[ext_resource type="Script" uid="uid://xkpakgeelgti" path="res://Objects/Actors/Enemies/Attacks/attack_script.gd" id="1_8uah3"]
+
+[resource]
+script = ExtResource("1_8uah3")
+animation_name = "Punch"
+prefered_range = 1.5
+damage_to_deal = 20
+metadata/_custom_type_script = "uid://xkpakgeelgti"

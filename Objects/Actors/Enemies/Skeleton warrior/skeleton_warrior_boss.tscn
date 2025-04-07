@@ -1,0 +1,213 @@
+[gd_scene load_steps=41 format=3 uid="uid://oonjbs278vgd"]
+
+[ext_resource type="Script" uid="uid://1yelavsi3kdo" path="res://Objects/Actors/Enemies/enemy_class_script.gd" id="1_2ddh6"]
+[ext_resource type="Script" uid="uid://xkpakgeelgti" path="res://Objects/Actors/Enemies/Attacks/attack_script.gd" id="2_4emam"]
+[ext_resource type="Script" uid="uid://c6f687u1ri8jh" path="res://Objects/Actors/Enemies/skeleton_skin.gd" id="2_lp86o"]
+[ext_resource type="PackedScene" uid="uid://biynglbxwjsad" path="res://Objects/Actors/Enemies/Skeleton warrior/Skeleton_Warrior.glb" id="3_2ddh6"]
+[ext_resource type="Resource" uid="uid://ckraaqdjmhthv" path="res://Objects/Actors/Enemies/Attacks/Melee/chop.tres" id="3_vmreq"]
+[ext_resource type="Resource" uid="uid://bmg2dq3o58cuc" path="res://Objects/Actors/Enemies/Attacks/Melee/spin.tres" id="4_8g7qf"]
+[ext_resource type="Script" uid="uid://n3570sslnkri" path="res://Common/Components/movement_component.gd" id="4_c2u32"]
+[ext_resource type="PackedScene" uid="uid://cbuby24vj2xo0" path="res://Objects/Actors/Enemies/Skeleton assets/Skeleton_Axe.gltf" id="4_lp86o"]
+[ext_resource type="Resource" uid="uid://b5phcswchh6pw" path="res://Objects/Actors/Enemies/Attacks/Range/stab.tres" id="5_nbo6l"]
+[ext_resource type="Script" uid="uid://b4gskhfdf4c5n" path="res://Common/Components/health_component.gd" id="5_os3ol"]
+[ext_resource type="Script" uid="uid://du5rqo0r67e2m" path="res://Common/Components/awareness_component.gd" id="6_6ttiv"]
+[ext_resource type="Resource" uid="uid://ct8tdgrjlt47e" path="res://Objects/Actors/Enemies/Attacks/Range/spinning.tres" id="6_de7lr"]
+[ext_resource type="Script" uid="uid://ctpal2c8v821y" path="res://Common/State machine/state_machine_core.gd" id="7_4emam"]
+[ext_resource type="Script" uid="uid://hsukou6r4sj5" path="res://Common/State machine/States/idle_state.gd" id="8_vmreq"]
+[ext_resource type="Script" uid="uid://c8t47sv3bk5vo" path="res://Common/State machine/States/follow_state.gd" id="9_8g7qf"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_r4m5e"]
+filter_enabled = true
+filters = ["%3DModel/../AttackTimer", "..", "Rig/Skeleton3D:chest", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3D:hand.r", "Rig/Skeleton3D:handslot.l", "Rig/Skeleton3D:handslot.r", "Rig/Skeleton3D:head", "Rig/Skeleton3D:hips", "Rig/Skeleton3D:lowerarm.l", "Rig/Skeleton3D:lowerarm.r", "Rig/Skeleton3D:root", "Rig/Skeleton3D:spine", "Rig/Skeleton3D:upperarm.l", "Rig/Skeleton3D:upperarm.r", "Rig/Skeleton3D:wrist.l", "Rig/Skeleton3D:wrist.r"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8hj2l"]
+animation = &"2H_Melee_Attack_Chop"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lp86o"]
+animation = &"2H_Melee_Attack_Spin"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pqu0f"]
+animation = &"2H_Melee_Attack_Spinning"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c2u32"]
+animation = &"2H_Melee_Attack_Stab"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7gj3l"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xle6v"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pqu0f"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c2u32"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_os3ol"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6ttiv"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4emam"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vmreq"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ce5yh"]
+states/Chop/node = SubResource("AnimationNodeAnimation_8hj2l")
+states/Chop/position = Vector2(287, 61)
+states/End/position = Vector2(540, 190)
+states/Spin/node = SubResource("AnimationNodeAnimation_lp86o")
+states/Spin/position = Vector2(287, 155)
+states/Spinning/node = SubResource("AnimationNodeAnimation_pqu0f")
+states/Spinning/position = Vector2(287, 330)
+states/Stab/node = SubResource("AnimationNodeAnimation_c2u32")
+states/Stab/position = Vector2(287, 238)
+states/Start/position = Vector2(121, 190)
+transitions = ["Start", "Chop", SubResource("AnimationNodeStateMachineTransition_7gj3l"), "Chop", "End", SubResource("AnimationNodeStateMachineTransition_xle6v"), "Start", "Spin", SubResource("AnimationNodeStateMachineTransition_pqu0f"), "Spin", "End", SubResource("AnimationNodeStateMachineTransition_c2u32"), "Start", "Stab", SubResource("AnimationNodeStateMachineTransition_os3ol"), "Start", "Spinning", SubResource("AnimationNodeStateMachineTransition_6ttiv"), "Stab", "End", SubResource("AnimationNodeStateMachineTransition_4emam"), "Spinning", "End", SubResource("AnimationNodeStateMachineTransition_vmreq")]
+graph_offset = Vector2(-501, -42)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_766bg"]
+animation = &"Hit_A"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_gygy3"]
+filter_enabled = true
+filters = ["%3DModel/../AttackTimer", ".."]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_os3ol"]
+animation = &"2H_Melee_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6ttiv"]
+animation = &"Walking_C"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8g7qf"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nbo6l"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_de7lr"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ihutn"]
+states/Idle/node = SubResource("AnimationNodeAnimation_os3ol")
+states/Idle/position = Vector2(396, 35)
+states/Walking/node = SubResource("AnimationNodeAnimation_6ttiv")
+states/Walking/position = Vector2(396, 155)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_8g7qf"), "Idle", "Walking", SubResource("AnimationNodeStateMachineTransition_nbo6l"), "Walking", "Idle", SubResource("AnimationNodeStateMachineTransition_de7lr")]
+graph_offset = Vector2(-318, -119)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_r4m5e"]
+graph_offset = Vector2(-910.934, 101.499)
+nodes/AttackOneShot/node = SubResource("AnimationNodeOneShot_r4m5e")
+nodes/AttackOneShot/position = Vector2(-220, 320)
+nodes/AttackStateMachine/node = SubResource("AnimationNodeStateMachine_ce5yh")
+nodes/AttackStateMachine/position = Vector2(-500, 440)
+nodes/ExtraAnimation/node = SubResource("AnimationNodeAnimation_766bg")
+nodes/ExtraAnimation/position = Vector2(0, 580)
+nodes/ExtraOneShot/node = SubResource("AnimationNodeOneShot_gygy3")
+nodes/ExtraOneShot/position = Vector2(220, 380)
+nodes/MovementStateMachine/node = SubResource("AnimationNodeStateMachine_ihutn")
+nodes/MovementStateMachine/position = Vector2(-600, 220)
+nodes/output/position = Vector2(460, 460)
+node_connections = [&"AttackOneShot", 0, &"MovementStateMachine", &"AttackOneShot", 1, &"AttackStateMachine", &"ExtraOneShot", 0, &"AttackOneShot", &"ExtraOneShot", 1, &"ExtraAnimation", &"output", 0, &"ExtraOneShot"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r0eh7"]
+radius = 1.4
+height = 6.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xeki3"]
+
+[node name="SkeletonWarriorBoss" type="CharacterBody3D" node_paths=PackedStringArray("movement_component", "health_component", "awareness_component")]
+script = ExtResource("1_2ddh6")
+movement_component = NodePath("Components/MovementComponent")
+health_component = NodePath("Components/HealthComponent")
+awareness_component = NodePath("Components/AwarenessComponent")
+list_of_attacks = Array[ExtResource("2_4emam")]([ExtResource("3_vmreq"), ExtResource("4_8g7qf"), ExtResource("5_nbo6l"), ExtResource("6_de7lr")])
+metadata/_custom_type_script = "uid://1yelavsi3kdo"
+
+[node name="3DModel" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_lp86o")
+metadata/_custom_type_script = "uid://c6f687u1ri8jh"
+
+[node name="Skeleton_Warrior" parent="3DModel" instance=ExtResource("3_2ddh6")]
+
+[node name="Rig" parent="3DModel/Skeleton_Warrior" index="0"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="Skeleton_Warrior_Helmet" parent="3DModel/Skeleton_Warrior/Rig/Skeleton3D" index="0"]
+transform = Transform3D(1, -2.20965e-22, 1.69407e-21, 2.20965e-22, 1, 0, -1.69407e-21, 3.58732e-43, 1, 0, 1.21587, -1.35973e-07)
+
+[node name="Weapon" type="BoneAttachment3D" parent="3DModel/Skeleton_Warrior/Rig/Skeleton3D" index="1"]
+transform = Transform3D(-0.999999, 4.68393e-07, 4.5731e-07, 3.978e-07, -5.88753e-07, 0.999999, 3.97616e-07, 0.999999, 5.35882e-07, -0.883132, 1.04926, -7.27595e-07)
+bone_name = "handslot.r"
+bone_idx = 13
+
+[node name="Skeleton_Axe" parent="3DModel/Skeleton_Warrior/Rig/Skeleton3D/Weapon" instance=ExtResource("4_lp86o")]
+
+[node name="AttackTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+unique_name_in_owner = true
+root_node = NodePath("%3DModel/Skeleton_Warrior")
+tree_root = SubResource("AnimationNodeBlendTree_r4m5e")
+anim_player = NodePath("../3DModel/Skeleton_Warrior/AnimationPlayer")
+parameters/AttackOneShot/active = false
+parameters/AttackOneShot/internal_active = false
+parameters/AttackOneShot/request = 0
+parameters/ExtraOneShot/active = false
+parameters/ExtraOneShot/internal_active = false
+parameters/ExtraOneShot/request = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("CapsuleShape3D_r0eh7")
+
+[node name="Components" type="Node3D" parent="."]
+
+[node name="MovementComponent" type="Node" parent="Components"]
+script = ExtResource("4_c2u32")
+running_speed = 2.0
+sprinting_speed = 5.0
+jump_force = 10.0
+metadata/_custom_type_script = "uid://n3570sslnkri"
+
+[node name="HealthComponent" type="Node" parent="Components"]
+script = ExtResource("5_os3ol")
+max_health = 300
+metadata/_custom_type_script = "uid://b4gskhfdf4c5n"
+
+[node name="AwarenessComponent" type="Area3D" parent="Components"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("6_6ttiv")
+metadata/_custom_type_script = "uid://du5rqo0r67e2m"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Components/AwarenessComponent"]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0)
+shape = SubResource("SphereShape3D_xeki3")
+
+[node name="StateMachineCore" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+unique_name_in_owner = true
+script = ExtResource("7_4emam")
+initial_state = NodePath("EnemyIdleState")
+
+[node name="EnemyIdleState" type="Node" parent="StateMachineCore"]
+script = ExtResource("8_vmreq")
+metadata/_custom_type_script = "uid://hsukou6r4sj5"
+
+[node name="FollowState" type="Node" parent="StateMachineCore" node_paths=PackedStringArray("timer_check_position")]
+script = ExtResource("9_8g7qf")
+wanted_distance_from_target = 1.0
+timer_check_position = NodePath("Timer")
+metadata/_custom_type_script = "uid://c8t47sv3bk5vo"
+
+[node name="Timer" type="Timer" parent="StateMachineCore/FollowState"]
+one_shot = true
+
+[editable path="3DModel/Skeleton_Warrior"]

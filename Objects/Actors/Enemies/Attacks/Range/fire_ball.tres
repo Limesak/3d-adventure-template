@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttackClass" load_steps=3 format=3 uid="uid://cyrujqbq74axg"]
+
+[ext_resource type="Script" uid="uid://xkpakgeelgti" path="res://Objects/Actors/Enemies/Attacks/attack_script.gd" id="1_dj13q"]
+[ext_resource type="Script" uid="uid://dsgjo3noo457w" path="res://Objects/Effects/effect_script.gd" id="1_or575"]
+
+[resource]
+script = ExtResource("1_dj13q")
+animation_name = "Spellcast_Shoot"
+prefered_range = 15.0
+too_close_range = 4.0
+damage_to_deal = 40
+effects = Array[ExtResource("1_or575")]([])
+metadata/_custom_type_script = "uid://xkpakgeelgti"

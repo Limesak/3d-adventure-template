@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://dr2175w78x574"]
+
+[ext_resource type="PackedScene" uid="uid://bqem2q2uoplf7" path="res://Objects/Actors/Playable characters/player_character.tscn" id="1_u52ul"]
+[ext_resource type="PackedScene" uid="uid://bxf46htvwmin2" path="res://Objects/Actors/Enemies/Skeleton mage/skeleton_mage.tscn" id="2_vonw3"]
+[ext_resource type="PackedScene" uid="uid://ch7vvoswbmnje" path="res://Objects/Actors/Enemies/Skeleton minion/skeleton_minion.tscn" id="3_oi3di"]
+[ext_resource type="PackedScene" uid="uid://oonjbs278vgd" path="res://Objects/Actors/Enemies/Skeleton warrior/skeleton_warrior_boss.tscn" id="4_0b4ue"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5xgho"]
+sky_top_color = Color(0.862641, 0.87489, 0.890752, 1)
+
+[sub_resource type="Sky" id="Sky_u52ul"]
+sky_material = SubResource("ProceduralSkyMaterial_5xgho")
+
+[sub_resource type="Environment" id="Environment_vonw3"]
+background_mode = 2
+sky = SubResource("Sky_u52ul")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u52ul"]
+size = Vector3(40, 0.5, 40)
+
+[node name="Level" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vonw3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.608304, -0.679615, 0.409986, 0, 0.516548, 0.856258, -0.793704, 0.520866, -0.314219, 0, 0, 0)
+
+[node name="Entities" type="Node3D" parent="."]
+
+[node name="PlayerCharacter" parent="Entities" instance=ExtResource("1_u52ul")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0295301, 0)
+
+[node name="SkeletonMage" parent="Entities" instance=ExtResource("2_vonw3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
+
+[node name="SkeletonMinion" parent="Entities" instance=ExtResource("3_oi3di")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
+
+[node name="SkeletonWarriorBoss" parent="Entities" instance=ExtResource("4_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Geometry/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25753, 0)
+size = Vector3(40, 0.5, 40)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25753, 0)
+shape = SubResource("BoxShape3D_u52ul")
