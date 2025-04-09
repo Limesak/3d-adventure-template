@@ -7,13 +7,13 @@
 [ext_resource type="Resource" uid="uid://ckraaqdjmhthv" path="res://Objects/Actors/Enemies/Attacks/Melee/chop.tres" id="3_vmreq"]
 [ext_resource type="Resource" uid="uid://bmg2dq3o58cuc" path="res://Objects/Actors/Enemies/Attacks/Melee/spin.tres" id="4_8g7qf"]
 [ext_resource type="Script" uid="uid://n3570sslnkri" path="res://Common/Components/movement_component.gd" id="4_c2u32"]
-[ext_resource type="PackedScene" uid="uid://cbuby24vj2xo0" path="res://Objects/Actors/Enemies/Skeleton assets/Skeleton_Axe.gltf" id="4_lp86o"]
 [ext_resource type="Resource" uid="uid://b5phcswchh6pw" path="res://Objects/Actors/Enemies/Attacks/Range/stab.tres" id="5_nbo6l"]
 [ext_resource type="Script" uid="uid://b4gskhfdf4c5n" path="res://Common/Components/health_component.gd" id="5_os3ol"]
 [ext_resource type="Script" uid="uid://du5rqo0r67e2m" path="res://Common/Components/awareness_component.gd" id="6_6ttiv"]
-[ext_resource type="Resource" uid="uid://ct8tdgrjlt47e" path="res://Objects/Actors/Enemies/Attacks/Range/spinning.tres" id="6_de7lr"]
+[ext_resource type="Resource" uid="uid://ct8tdgrjlt47e" path="res://Objects/Actors/Enemies/Attacks/Chasing/spinning.tres" id="6_de7lr"]
 [ext_resource type="Script" uid="uid://ctpal2c8v821y" path="res://Common/State machine/state_machine_core.gd" id="7_4emam"]
 [ext_resource type="Script" uid="uid://hsukou6r4sj5" path="res://Common/State machine/States/idle_state.gd" id="8_vmreq"]
+[ext_resource type="PackedScene" uid="uid://u2awhesjiiyi" path="res://Objects/Weapons/2H Skeleton Axe/2h_skeleton_axe.tscn" id="9_4emam"]
 [ext_resource type="Script" uid="uid://c8t47sv3bk5vo" path="res://Common/State machine/States/follow_state.gd" id="9_8g7qf"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_r4m5e"]
@@ -49,11 +49,10 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4emam"]
 switch_mode = 2
-advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vmreq"]
-switch_mode = 2
-advance_mode = 2
+xfade_time = 0.2
+break_loop_at_end = true
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ce5yh"]
 states/Chop/node = SubResource("AnimationNodeAnimation_8hj2l")
@@ -100,7 +99,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-318, -119)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_r4m5e"]
-graph_offset = Vector2(-910.934, 101.499)
+graph_offset = Vector2(-788.736, 110.017)
 nodes/AttackOneShot/node = SubResource("AnimationNodeOneShot_r4m5e")
 nodes/AttackOneShot/position = Vector2(-220, 320)
 nodes/AttackStateMachine/node = SubResource("AnimationNodeStateMachine_ce5yh")
@@ -146,7 +145,7 @@ transform = Transform3D(-0.999999, 4.68393e-07, 4.5731e-07, 3.978e-07, -5.88753e
 bone_name = "handslot.r"
 bone_idx = 13
 
-[node name="Skeleton_Axe" parent="3DModel/Skeleton_Warrior/Rig/Skeleton3D/Weapon" instance=ExtResource("4_lp86o")]
+[node name="2H Skeleton Axe" parent="3DModel/Skeleton_Warrior/Rig/Skeleton3D/Weapon" instance=ExtResource("9_4emam")]
 
 [node name="AttackTimer" type="Timer" parent="."]
 unique_name_in_owner = true

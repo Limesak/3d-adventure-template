@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://u2awhesjiiyi"]
+
+[ext_resource type="PackedScene" uid="uid://blhpr2jkg1oqh" path="res://Objects/Weapons/2H Skeleton Axe/Skeleton_Axe.gltf" id="1_4mag6"]
+[ext_resource type="Script" uid="uid://cmew770cbxl17" path="res://Common/Components/hitbox_component.gd" id="2_5brve"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a1vjy"]
+radius = 0.543052
+height = 1.20264
+
+[node name="2H Skeleton Axe" type="Node3D"]
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="Skeleton_Axe2" parent="Model" instance=ExtResource("1_4mag6")]
+
+[node name="HitboxComponent" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+script = ExtResource("2_5brve")
+metadata/_custom_type_script = "uid://cmew770cbxl17"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628546, 0)
+shape = SubResource("CapsuleShape3D_a1vjy")

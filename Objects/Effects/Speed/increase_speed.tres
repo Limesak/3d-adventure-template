@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="SpeedModifierClass" load_steps=2 format=3 uid="uid://c1a6hhbhbxbae"]
-
-[ext_resource type="Script" uid="uid://b746txwdue1eq" path="res://Objects/Effects/speed_modifier.gd" id="1_12ovm"]
-
-[resource]
-script = ExtResource("1_12ovm")
-speed_modifier = 4.0
-targeted_object = 0
-metadata/_custom_type_script = "uid://b746txwdue1eq"

@@ -1,10 +1,14 @@
-[gd_resource type="Resource" script_class="AttackClass" load_steps=2 format=3 uid="uid://b5phcswchh6pw"]
+[gd_resource type="Resource" script_class="AttackClass" load_steps=3 format=3 uid="uid://b5phcswchh6pw"]
 
 [ext_resource type="Script" uid="uid://xkpakgeelgti" path="res://Objects/Actors/Enemies/Attacks/attack_script.gd" id="1_k3mil"]
+[ext_resource type="Script" uid="uid://dsgjo3noo457w" path="res://Objects/Effects/effect_script.gd" id="1_tqwln"]
 
 [resource]
 script = ExtResource("1_k3mil")
 animation_name = "Stab"
-prefered_range = 3.0
+prefered_range = 4.0
+too_close_range = 2.0
 damage_to_deal = 35
+effects = Array[ExtResource("1_tqwln")]([])
+attack_is_looping = false
 metadata/_custom_type_script = "uid://xkpakgeelgti"

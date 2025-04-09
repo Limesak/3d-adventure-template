@@ -15,9 +15,12 @@ var is_starting_jumping := false
 var is_sprinting := false
 var defend := false
 var on_ground_last_frame := true
+var waiting_contact := false
 
 func _ready():
 	SignalsBus.action_effect_transmitted.connect(process_effect_on_self)
+	skin.waiting_contact.connect(toggle_contact_detection)
+	skin.applied_action_effect_to_self.connect(trigger_attack_effects)
 
 func _process(delta):
 	state_machine_core.update_state_machine(delta)
@@ -44,21 +47,46 @@ func _physics_process(delta):
 		else :
 			skin.idle()
 	
+	if waiting_contact:
+		if awareness_component.target:
+			var distance_from_target := global_position.distance_to(awareness_component.target.position)
+			if distance_from_target < 2.0:
+				skin.contact_made.emit()
+	
 	on_ground_last_frame = is_on_floor()
 
 func attempt_attack(attack_performed:AttackClass):
-	var tween = create_tween()
-	# The target angle is the direction the parent should face given its last movement
-	var target_angle := Vector3.BACK.signed_angle_to(global_position.direction_to(awareness_component.target.global_position), Vector3.UP)
-	var target_rotation := Vector3(skin.rotation.x, target_angle, skin.rotation.z)
-	tween.tween_property(skin, "rotation", target_rotation, 0.4)
 	skin.attack(attack_performed)
+	#movement_component.stop_movement(0.2, 0.4)
+
+func trigger_attack_effects(attack_performed):
 	for effect in attack_performed.effects:
 		if effect.targeted_object == effect.receivers.targeting_self:
 			effect.run_effect(self)
 
-func process_effect_on_self(caller, target, effect_type:EffectClass.modifiers, outcome):
+func process_effect_on_self(caller, target, effect:EffectClass, outcome):
+	var original_value
 	if target == self:
-		match effect_type:
+		match effect.modifier_type:
 			EffectClass.modifiers.speed:
+				original_value = movement_component.speed_modifier
 				movement_component.speed_modifier = outcome
+	else:
+		return
+	
+	if !effect.effect_is_temporary:
+		return
+	
+	if effect.effect_has_duration:
+		await get_tree().create_timer(effect.effect_duration).timeout
+	else:
+		await skin.contact_made
+	return_to_normal_values(effect.modifier_type, original_value)
+
+func return_to_normal_values(effect_type:EffectClass.modifiers, base_value):
+	match effect_type:
+		EffectClass.modifiers.speed:
+			movement_component.speed_modifier = base_value
+
+func toggle_contact_detection(value:bool):
+	waiting_contact = value

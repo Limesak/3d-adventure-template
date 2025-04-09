@@ -1,3 +1,4 @@
+@tool
 class_name SpeedModifierClass
 extends EffectClass
 
@@ -10,4 +11,4 @@ func run_effect(caller) -> void:
 	notify_speed_change(caller, target)
 
 func notify_speed_change(caller, target):
-	SignalsBus.action_effect_transmitted.emit(caller, target, modifiers.speed, speed_modifier)
+	SignalsBus.action_effect_transmitted.emit(caller, target, self, speed_modifier)

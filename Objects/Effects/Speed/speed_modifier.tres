@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SpeedModifierClass" load_steps=2 format=3 uid="uid://b1edgechj6nwp"]
+
+[ext_resource type="Script" uid="uid://b746txwdue1eq" path="res://Objects/Effects/speed_modifier.gd" id="1_p4myr"]
+
+[resource]
+script = ExtResource("1_p4myr")
+speed_modifier = 5.0
+targeted_object = 0
+modifier_type = 2
+effect_is_temporary = true
+effect_has_duration = false
+effect_duration = 0.0
+metadata/_custom_type_script = "uid://b746txwdue1eq"

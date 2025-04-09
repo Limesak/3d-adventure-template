@@ -4,11 +4,15 @@ extends State
 @export var wanted_distance_from_target := 5.0
 @export var timer_check_position:Timer
 
+@onready var attack_timer = %AttackTimer
+
 var target:PlayerCharacter
 var wanted_position:Vector3
 
 func enter_state():
 	target = parent_enemy.awareness_component.target
+	var rand_time := randf_range(3.0, 8.0)
+	attack_timer.start(rand_time)
 	find_position_in_radius()
 
 func update_state_physics(delta:float):
@@ -26,17 +30,6 @@ func update_state_physics(delta:float):
 	
 	if distance_difference > 2.0 and timer_check_position.is_stopped():
 		find_position_in_radius()
-	
-	for body in parent_enemy.awareness_component.get_overlapping_bodies():
-		if body is EnemyClass:
-			if body == parent_enemy:
-				pass
-			else:
-				var dist = parent_enemy.global_position.distance_to(body.global_position)
-				if dist < 2.0:
-					var direction_away_from_ally := -parent_enemy.global_position.direction_to(body.global_position)
-					var mv_away_dir := Vector3(direction_away_from_ally.x, 0.0, direction_away_from_ally.z).normalized()
-					parent_enemy.movement_component._direction = mv_away_dir
 	
 	if !parent_enemy.awareness_component.target:
 		transitioned.emit(self, "EnemyIdleState")
