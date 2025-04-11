@@ -20,6 +20,11 @@ unique_name_in_owner = true
 wait_time = 3.0
 one_shot = true
 
+[node name="InvulTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
+
 [node name="Components" type="Node3D" parent="."]
 
 [node name="StateMachineCore" type="Node" parent="."]

@@ -69,3 +69,6 @@ func hit() -> void:
 	animation_tree.set("parameters/ExtraOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	animation_tree.set("parameters/AttackOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
 	performing_action = false
+
+func can_damage(value:bool):
+	$"Knight/Rig/Skeleton3D/Weapon/1HSword".can_damage = value

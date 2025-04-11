@@ -7,7 +7,7 @@
 radius = 0.543052
 height = 1.20264
 
-[node name="2H Skeleton Axe" type="Node3D"]
+[node name="2HSkeletonAxe" type="Node3D"]
 
 [node name="Model" type="Node3D" parent="."]
 

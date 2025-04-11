@@ -77,6 +77,13 @@ func return_to_normal_values(effect_type:EffectClass.modifiers, base_value):
 		EffectClass.modifiers.speed:
 			movement_component.speed_modifier = base_value
 
+func hit():
+	if !%InvulTimer.time_left:
+		%InvulTimer.start()
+		skin.hit()
+		skin.do_squash_and_stretch(1.2, 0.5)
+		movement_component.stop_movement(0.1, 0.6)
+
 func sub_class_ready() -> void:
 	pass
 

@@ -29,3 +29,8 @@ func chase_target() -> void:
 			skin.end_looping_action()
 			current_temp_effect.revert_effect(self)
 			movement_component.allow_rotation = true
+
+func hit():
+	if !%InvulTimer.time_left:
+		%InvulTimer.start()
+		skin.hit()

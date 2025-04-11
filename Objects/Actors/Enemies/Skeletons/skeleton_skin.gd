@@ -38,3 +38,8 @@ func hit() -> void:
 	animation_tree.set("parameters/ExtraOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
 	animation_tree.set("parameters/ExtraOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	animation_tree.set("parameters/AttackOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+
+func do_squash_and_stretch(value:float, duration:float = 0.1):
+	var tween = create_tween()
+	tween.tween_property(self, "squash_and_stretch", value, duration)
+	tween.tween_property(self, "squash_and_stretch", 1.0, duration * 1.8).set_ease(Tween.EASE_OUT)
