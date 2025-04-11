@@ -18,6 +18,8 @@ var _direction := Vector3.ZERO
 var _last_movement_direction := Vector3.BACK
 var _gravity := -30.0
 
+var allow_rotation := true
+
 func physics_update(delta):
 	var y_velocity := _parent.velocity.y
 	_parent.velocity.y = 0.0
@@ -39,12 +41,13 @@ func physics_update(delta):
 	
 	_parent.move_and_slide()
 	
-	# When the parent moves, we store the new direction and rotate it
-	if _direction.length() > 0.2:
-		# The target angle is the direction the parent should face given its last movement
-		var target_angle := Vector3.BACK.signed_angle_to(_direction, Vector3.UP)
-		# We change the rotation of the parent so it corresponds to the [target_angle]
-		_parent.skin.rotation.y = rotate_toward(_parent.skin.rotation.y, target_angle, rotation_speed * delta)
+	if allow_rotation:
+		# When the parent moves, we store the new direction and rotate it
+		if _direction.length() > 0.2:
+			# The target angle is the direction the parent should face given its last movement
+			var target_angle := Vector3.BACK.signed_angle_to(_direction, Vector3.UP)
+			# We change the rotation of the parent so it corresponds to the [target_angle]
+			_parent.skin.rotation.y = rotate_toward(_parent.skin.rotation.y, target_angle, rotation_speed * delta)
 
 func stop_movement(start_duration:float, end_duration:float):
 	var tween = create_tween()

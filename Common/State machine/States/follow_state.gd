@@ -22,6 +22,8 @@ func update_state_physics(delta:float):
 	
 	if distance < 1.0:
 		parent_enemy.movement_component._direction = Vector3.ZERO
+		if parent_enemy.awareness_component.target:
+			transitioned.emit(self, "CombatReadyState")
 	else:
 		parent_enemy.movement_component._direction = move_direction
 	

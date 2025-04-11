@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var awareness_component:AwarenessComponent
 
 @onready var skin:SkeletonSkin = %"3DModel"
+@onready var attack_timer = %AttackTimer
 @onready var state_machine_core:StateMachineCore = %StateMachineCore
 
 @export var list_of_attacks:Array[AttackClass]
@@ -15,30 +16,19 @@ var is_starting_jumping := false
 var is_sprinting := false
 var defend := false
 var on_ground_last_frame := true
-var waiting_contact := false
+
+var current_temp_effect:EffectClass
 
 func _ready():
-	SignalsBus.action_effect_transmitted.connect(process_effect_on_self)
-	skin.waiting_contact.connect(toggle_contact_detection)
-	skin.applied_action_effect_to_self.connect(trigger_attack_effects)
+	sub_class_ready()
 
 func _process(delta):
 	state_machine_core.update_state_machine(delta)
+	sub_class_update(delta)
 
 func _physics_process(delta):
 	state_machine_core.update_state_machine_physics(delta)
-	
 	movement_component.physics_update(delta)
-	
-	if awareness_component.target and !skin.performing_action:
-		var valid_attacks:Array[AttackClass]
-		var distance_to_target := global_position.distance_to(awareness_component.target.global_position)
-		for attack in list_of_attacks:
-			if distance_to_target < attack.prefered_range and distance_to_target > attack.too_close_range:
-				valid_attacks.append(attack)
-		if valid_attacks.size() > 0:
-			var random_attack = valid_attacks[randi_range(0, valid_attacks.size() -1)]
-			attempt_attack(random_attack)
 	
 	if is_on_floor():
 		var ground_speed := velocity.length()
@@ -47,46 +37,51 @@ func _physics_process(delta):
 		else :
 			skin.idle()
 	
-	if waiting_contact:
-		if awareness_component.target:
-			var distance_from_target := global_position.distance_to(awareness_component.target.position)
-			if distance_from_target < 2.0:
-				skin.contact_made.emit()
+	check_attack_possibilities()
 	
 	on_ground_last_frame = is_on_floor()
+	
+	sub_class_physics_update(delta)
 
-func attempt_attack(attack_performed:AttackClass):
-	skin.attack(attack_performed)
-	#movement_component.stop_movement(0.2, 0.4)
+func check_attack_possibilities():
+	if awareness_component.target and attack_timer.is_stopped() and !skin.waiting_looping_action_end:
+		var valid_attacks:Array[AttackClass]
+		var distance_to_target := global_position.distance_to(awareness_component.target.global_position)
+		for attack in list_of_attacks:
+			if distance_to_target < attack.prefered_range and distance_to_target > attack.too_close_range:
+				valid_attacks.append(attack)
+		if valid_attacks.size() > 0:
+			var random_attack = valid_attacks[randi_range(0, valid_attacks.size() -1)]
+			skin.attack(random_attack)
+			trigger_attack_effects_on_self(random_attack)
+			if !skin.waiting_looping_action_end:
+				start_attack_timer()
 
-func trigger_attack_effects(attack_performed):
+func start_attack_timer():
+	var rand_time = randf_range(1.5, 7.0)
+	attack_timer.start(rand_time)
+
+func trigger_attack_effects_on_self(attack_performed):
 	for effect in attack_performed.effects:
 		if effect.targeted_object == effect.receivers.targeting_self:
 			effect.run_effect(self)
-
-func process_effect_on_self(caller, target, effect:EffectClass, outcome):
-	var original_value
-	if target == self:
-		match effect.modifier_type:
-			EffectClass.modifiers.speed:
-				original_value = movement_component.speed_modifier
-				movement_component.speed_modifier = outcome
-	else:
-		return
-	
-	if !effect.effect_is_temporary:
-		return
-	
-	if effect.effect_has_duration:
-		await get_tree().create_timer(effect.effect_duration).timeout
-	else:
-		await skin.contact_made
-	return_to_normal_values(effect.modifier_type, original_value)
+		if !effect.effect_is_temporary:
+			return
+		if effect.effect_has_duration:
+			await get_tree().create_timer(effect.effect_duration).timeout
+		else:
+			current_temp_effect = effect
 
 func return_to_normal_values(effect_type:EffectClass.modifiers, base_value):
 	match effect_type:
 		EffectClass.modifiers.speed:
 			movement_component.speed_modifier = base_value
 
-func toggle_contact_detection(value:bool):
-	waiting_contact = value
+func sub_class_ready() -> void:
+	pass
+
+func sub_class_update(delta) -> void:
+	pass
+
+func sub_class_physics_update(delta) -> void:
+	pass

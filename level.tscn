@@ -1,9 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dr2175w78x574"]
+[gd_scene load_steps=7 format=3 uid="uid://dr2175w78x574"]
 
 [ext_resource type="PackedScene" uid="uid://bqem2q2uoplf7" path="res://Objects/Actors/Playable characters/player_character.tscn" id="1_u52ul"]
-[ext_resource type="PackedScene" uid="uid://bxf46htvwmin2" path="res://Objects/Actors/Enemies/Skeleton mage/skeleton_mage.tscn" id="2_vonw3"]
-[ext_resource type="PackedScene" uid="uid://ch7vvoswbmnje" path="res://Objects/Actors/Enemies/Skeleton minion/skeleton_minion.tscn" id="3_oi3di"]
-[ext_resource type="PackedScene" uid="uid://oonjbs278vgd" path="res://Objects/Actors/Enemies/Skeleton warrior/skeleton_warrior_boss.tscn" id="4_0b4ue"]
+[ext_resource type="PackedScene" uid="uid://birsql0y5e6bq" path="res://Objects/Actors/Enemies/Skeletons/Skeleton mage/skeleton_mage.tscn" id="2_vonw3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5xgho"]
 sky_top_color = Color(0.862641, 0.87489, 0.890752, 1)
@@ -31,18 +29,13 @@ transform = Transform3D(-0.608304, -0.679615, 0.409986, 0, 0.516548, 0.856258, -
 [node name="PlayerCharacter" parent="Entities" instance=ExtResource("1_u52ul")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0295301, 0)
 
-[node name="SkeletonMage" parent="Entities" instance=ExtResource("2_vonw3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
-
-[node name="SkeletonMinion" parent="Entities" instance=ExtResource("3_oi3di")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
-
-[node name="SkeletonWarriorBoss" parent="Entities" instance=ExtResource("4_0b4ue")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.8633)
+[node name="Enemy" parent="Entities" instance=ExtResource("2_vonw3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.0367)
 
 [node name="Geometry" type="Node3D" parent="."]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Geometry"]
+collision_mask = 0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Geometry/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25753, 0)

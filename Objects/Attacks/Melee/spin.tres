@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AttackClass" load_steps=3 format=3 uid="uid://bmg2dq3o58cuc"]
+
+[ext_resource type="Script" uid="uid://dsgjo3noo457w" path="res://Objects/Effects/effect_script.gd" id="1_d7w7i"]
+[ext_resource type="Script" uid="uid://xkpakgeelgti" path="res://Objects/Attacks/attack_script.gd" id="1_yoyay"]
+
+[resource]
+script = ExtResource("1_yoyay")
+animation_name = "Spin"
+prefered_range = 4.0
+too_close_range = 0.0
+damage_to_deal = 25
+effects = Array[ExtResource("1_d7w7i")]([])
+attack_is_looping = false
+metadata/_custom_type_script = "uid://xkpakgeelgti"

@@ -23,6 +23,11 @@ SignalsBus="*res://Common/Singletons/signals_bus.gd"
 
 project/assembly_name="3d-adventure"
 
+[global_group]
+
+Enemies=""
+Player=""
+
 [input]
 
 move_forward={
@@ -75,3 +80,11 @@ use_item_button={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":88,"key_label":0,"unicode":120,"location":0,"echo":false,"script":null)
 ]
 }
+
+[layer_names]
+
+3d_physics/layer_1="World"
+3d_physics/layer_2="Player"
+3d_physics/layer_3="Enemies"
+3d_physics/layer_4="Projectiles"
+3d_physics/layer_5="Items"

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dn80mnciw8j36"]
+
+[ext_resource type="Script" uid="uid://1yelavsi3kdo" path="res://Objects/Actors/Enemies/enemy_class_script.gd" id="1_or1jn"]
+[ext_resource type="Script" uid="uid://c6f687u1ri8jh" path="res://Objects/Actors/Enemies/Skeletons/skeleton_skin.gd" id="4_gvj1k"]
+[ext_resource type="Script" uid="uid://ctpal2c8v821y" path="res://Common/State machine/state_machine_core.gd" id="10_ytt3h"]
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 15
+script = ExtResource("1_or1jn")
+metadata/_custom_type_script = "uid://1yelavsi3kdo"
+
+[node name="3DModel" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_gvj1k")
+metadata/_custom_type_script = "uid://c6f687u1ri8jh"
+
+[node name="AttackTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[node name="Components" type="Node3D" parent="."]
+
+[node name="StateMachineCore" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("10_ytt3h")
