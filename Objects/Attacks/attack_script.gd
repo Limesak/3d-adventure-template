@@ -17,7 +17,6 @@ extends Resource
 		notify_property_list_changed()
 var projectile:PackedScene
 
-
 enum stoping_conditions{OVER_TIME, AT_CONTACT}
 var stopping_condition:String
 

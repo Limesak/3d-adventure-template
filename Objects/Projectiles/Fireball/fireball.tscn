@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dspqswgx4ksf4"]
+[gd_scene load_steps=4 format=3 uid="uid://dspqswgx4ksf4"]
 
 [ext_resource type="Script" uid="uid://cynwmh8y8v5bf" path="res://Objects/Projectiles/projectile_script.gd" id="1_883jx"]
 
@@ -11,8 +11,6 @@ material = SubResource("StandardMaterial3D_4w1gp")
 radius = 0.3
 height = 0.6
 
-[sub_resource type="BoxMesh" id="BoxMesh_883jx"]
-
 [node name="Fireball" type="Node3D"]
 script = ExtResource("1_883jx")
 projectile_speed = 12.5
@@ -21,10 +19,5 @@ projectile_speed = 12.5
 mesh = SubResource("SphereMesh_s2ovk")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 target_position = Vector3(0, 0, 0.35)
 collision_mask = 3
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0.502778)
-mesh = SubResource("BoxMesh_883jx")

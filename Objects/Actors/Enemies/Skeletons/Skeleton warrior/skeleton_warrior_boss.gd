@@ -34,7 +34,8 @@ func chase_target() -> void:
 			current_temp_effect.revert_effect(self)
 			movement_component.allow_rotation = true
 
-func hit():
+func hit(damage_dealt:int, effects_dealt:Array[EffectClass]):
 	if !%InvulTimer.time_left:
 		%InvulTimer.start()
 		skin.hit()
+		health_component.current_health -= damage_dealt

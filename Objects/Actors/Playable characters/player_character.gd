@@ -21,7 +21,7 @@ var defend := false:
 @onready var skin:PlayerSkin = %"3DModel"
 
 func _ready():
-	health_component.health_decreased.connect(hit)
+	pass
 
 func _process(delta):
 	# When the game is paused, we don't want the player to be able to move or use actions
@@ -68,10 +68,11 @@ func action_logic() -> void:
 	
 	defend = Input.is_action_pressed("block_button")
 
-func hit():
+func hit(damage_dealt:int, effects_dealt:Array[EffectClass]):
 	if !%InvulTimer.time_left:
 		%InvulTimer.start()
 		skin.hit()
+		health_component.current_health = -damage_dealt
 		do_squash_and_stretch(1.2, 0.15)
 		movement_component.stop_movement(0.2, 0.3)
 

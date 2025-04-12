@@ -17,6 +17,7 @@ var current_health:int:
 			current_health += value
 		
 		if current_health < previous_health:
+			print(current_health)
 			health_decreased.emit()
 		
 		if current_health <= 0:

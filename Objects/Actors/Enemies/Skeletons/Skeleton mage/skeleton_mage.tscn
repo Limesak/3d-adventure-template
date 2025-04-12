@@ -44,7 +44,7 @@ animation = &"Hit_A"
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_dcm5k"]
 filter_enabled = true
-filters = ["Rig/Skeleton3D:chest", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3D:hand.r", "Rig/Skeleton3D:handslot.l", "Rig/Skeleton3D:handslot.r", "Rig/Skeleton3D:head", "Rig/Skeleton3D:hips", "Rig/Skeleton3D:lowerarm.l", "Rig/Skeleton3D:lowerarm.r", "Rig/Skeleton3D:root", "Rig/Skeleton3D:spine", "Rig/Skeleton3D:upperarm.l", "Rig/Skeleton3D:upperarm.r", "Rig/Skeleton3D:wrist.l", "Rig/Skeleton3D:wrist.r"]
+filters = ["%3DModel/..", "Rig/Skeleton3D:chest", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3D:hand.r", "Rig/Skeleton3D:handslot.l", "Rig/Skeleton3D:handslot.r", "Rig/Skeleton3D:head", "Rig/Skeleton3D:hips", "Rig/Skeleton3D:lowerarm.l", "Rig/Skeleton3D:lowerarm.r", "Rig/Skeleton3D:root", "Rig/Skeleton3D:spine", "Rig/Skeleton3D:upperarm.l", "Rig/Skeleton3D:upperarm.r", "Rig/Skeleton3D:wrist.l", "Rig/Skeleton3D:wrist.r"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5t203"]
 animation = &"Idle"
@@ -71,7 +71,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-209, -20)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_lx6ub"]
-graph_offset = Vector2(-459.896, 104.847)
+graph_offset = Vector2(-366.574, -0.130981)
 nodes/AttackOneShot/node = SubResource("AnimationNodeOneShot_ur6ra")
 nodes/AttackOneShot/position = Vector2(380, 140)
 nodes/AttackStateMachine/node = SubResource("AnimationNodeStateMachine_n1gif")

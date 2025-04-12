@@ -150,7 +150,7 @@ filters = ["..", "Rig/Skeleton3D:chest", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_2b2eo"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_2b2eo"]
-graph_offset = Vector2(-799.622, -76.595)
+graph_offset = Vector2(-1039.62, -74.595)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_kr56n")
 nodes/Animation/position = Vector2(-780, 120)
 nodes/AttackOneShot/node = SubResource("AnimationNodeOneShot_2b2eo")
