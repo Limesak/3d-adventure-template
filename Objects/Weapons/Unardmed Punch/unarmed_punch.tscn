@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpd6jy6ms5s6x"]
+
+[ext_resource type="Script" uid="uid://b3tlwypu5ycyr" path="res://Objects/Weapons/weapon_script.gd" id="1_q5ntf"]
+
+[node name="UnarmedPunch" type="Node3D"]
+script = ExtResource("1_q5ntf")
+metadata/_custom_type_script = "uid://b3tlwypu5ycyr"
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0.5, 0, 0)
+collision_mask = 2

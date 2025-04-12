@@ -29,8 +29,8 @@ transform = Transform3D(-0.608304, -0.679615, 0.409986, 0, 0.516548, 0.856258, -
 [node name="PlayerCharacter" parent="Entities" instance=ExtResource("1_u52ul")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0295301, 0)
 
-[node name="Enemy" parent="Entities" instance=ExtResource("2_vonw3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.0367)
+[node name="SkeletonMage" parent="Entities" instance=ExtResource("2_vonw3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.288, 0, 0)
 
 [node name="Geometry" type="Node3D" parent="."]
 

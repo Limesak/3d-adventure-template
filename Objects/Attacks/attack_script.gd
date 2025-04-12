@@ -11,6 +11,12 @@ extends Resource
 	set(value):
 		attack_is_looping = value
 		notify_property_list_changed()
+@export var creates_projectile := false:
+	set(value):
+		creates_projectile = value
+		notify_property_list_changed()
+var projectile:PackedScene
+
 
 enum stoping_conditions{OVER_TIME, AT_CONTACT}
 var stopping_condition:String
@@ -23,6 +29,11 @@ func _get_property_list() -> Array:
 			"type": TYPE_STRING_NAME,
 			"hint": PROPERTY_HINT_ENUM,
 			"hint_string": ",".join(stoping_conditions.keys())
+		})
+	if creates_projectile:
+		properties.append({
+			"name": "projectile",
+			"type": TYPE_OBJECT
 		})
 	
 	return properties

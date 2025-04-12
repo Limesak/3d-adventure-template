@@ -5,9 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://bghem4ifgeuv4" path="res://Objects/Actors/Enemies/Skeletons/Skeleton mage/Model/Skeleton_Mage.glb" id="2_ur6ra"]
 [ext_resource type="Resource" uid="uid://cyrujqbq74axg" path="res://Objects/Attacks/Range/fire_ball.tres" id="3_5t203"]
 [ext_resource type="Script" uid="uid://b4gskhfdf4c5n" path="res://Common/Components/health_component.gd" id="3_n1gif"]
-[ext_resource type="PackedScene" uid="uid://ddihsml7u3r1q" path="res://Objects/Actors/Enemies/Skeletons/Skeleton assets/Skeleton_Staff.gltf" id="3_ur6ra"]
 [ext_resource type="Script" uid="uid://n3570sslnkri" path="res://Common/Components/movement_component.gd" id="4_dcm5k"]
 [ext_resource type="Script" uid="uid://du5rqo0r67e2m" path="res://Common/Components/awareness_component.gd" id="5_5t203"]
+[ext_resource type="PackedScene" uid="uid://dadgftmq308xc" path="res://Objects/Weapons/Skeleton Staff/skeleton_staff.tscn" id="5_dcm5k"]
 [ext_resource type="Script" uid="uid://hsukou6r4sj5" path="res://Common/State machine/States/idle_state.gd" id="6_0wkor"]
 [ext_resource type="Script" uid="uid://c8t47sv3bk5vo" path="res://Common/State machine/States/follow_state.gd" id="7_6ss4o"]
 [ext_resource type="Script" uid="uid://dfucs6atg31lh" path="res://Common/State machine/States/focus_for_combat_state.gd" id="8_d7nfc"]
@@ -19,7 +19,7 @@ radius = 30.0
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_ur6ra"]
 filter_enabled = true
-filters = ["Rig/Skeleton3D:chest", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3D:hand.r", "Rig/Skeleton3D:handslot.l", "Rig/Skeleton3D:handslot.r", "Rig/Skeleton3D:head", "Rig/Skeleton3D:hips", "Rig/Skeleton3D:lowerarm.l", "Rig/Skeleton3D:lowerarm.r", "Rig/Skeleton3D:root", "Rig/Skeleton3D:spine", "Rig/Skeleton3D:upperarm.l", "Rig/Skeleton3D:upperarm.r", "Rig/Skeleton3D:wrist.l", "Rig/Skeleton3D:wrist.r"]
+filters = ["%3DModel/..", "Rig/Skeleton3D:chest", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3D:hand.r", "Rig/Skeleton3D:handslot.l", "Rig/Skeleton3D:handslot.r", "Rig/Skeleton3D:head", "Rig/Skeleton3D:hips", "Rig/Skeleton3D:lowerarm.l", "Rig/Skeleton3D:lowerarm.r", "Rig/Skeleton3D:root", "Rig/Skeleton3D:spine", "Rig/Skeleton3D:upperarm.l", "Rig/Skeleton3D:upperarm.r", "Rig/Skeleton3D:wrist.l", "Rig/Skeleton3D:wrist.r"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ur6ra"]
 animation = &"Spellcast_Shoot"
@@ -85,11 +85,12 @@ nodes/MovementStateMachine/position = Vector2(60, 80)
 nodes/output/position = Vector2(860, 300)
 node_connections = [&"AttackOneShot", 0, &"MovementStateMachine", &"AttackOneShot", 1, &"AttackStateMachine", &"ExtraOneShot", 0, &"AttackOneShot", &"ExtraOneShot", 1, &"ExtraAnimation", &"output", 0, &"ExtraOneShot"]
 
-[node name="SkeletonMage" node_paths=PackedStringArray("movement_component", "health_component", "awareness_component") instance=ExtResource("1_lx6ub")]
+[node name="SkeletonMage" node_paths=PackedStringArray("movement_component", "health_component", "awareness_component", "enemy_weapon") instance=ExtResource("1_lx6ub")]
 movement_component = NodePath("Components/MovementComponent")
 health_component = NodePath("Components/HealthComponent")
 awareness_component = NodePath("Components/AwarenessComponent")
 list_of_attacks = Array[ExtResource("2_dcm5k")]([ExtResource("3_5t203")])
+enemy_weapon = NodePath("3DModel/Skeleton_Mage/Rig/Skeleton3D/Weapon/SkeletonStaff")
 
 [node name="Collision" type="CollisionShape3D" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.980892, 0)
@@ -105,7 +106,7 @@ transform = Transform3D(-0.999999, 4.68393e-07, 4.5731e-07, 3.978e-07, -5.88753e
 bone_name = "handslot.r"
 bone_idx = 13
 
-[node name="Skeleton_Staff2" parent="3DModel/Skeleton_Mage/Rig/Skeleton3D/Weapon" index="0" instance=ExtResource("3_ur6ra")]
+[node name="SkeletonStaff" parent="3DModel/Skeleton_Mage/Rig/Skeleton3D/Weapon" index="0" instance=ExtResource("5_dcm5k")]
 
 [node name="HealthComponent" type="Node" parent="Components" index="0"]
 script = ExtResource("3_n1gif")
@@ -128,7 +129,19 @@ metadata/_custom_type_script = "uid://du5rqo0r67e2m"
 shape = SubResource("SphereShape3D_85a3f")
 debug_color = Color(0, 0.645009, 0.269248, 0.42)
 
-[node name="StateMachineCore" parent="." index="4" node_paths=PackedStringArray("initial_state")]
+[node name="AnimationTree" type="AnimationTree" parent="." index="5"]
+unique_name_in_owner = true
+root_node = NodePath("%3DModel/Skeleton_Mage")
+tree_root = SubResource("AnimationNodeBlendTree_lx6ub")
+anim_player = NodePath("../3DModel/Skeleton_Mage/AnimationPlayer")
+parameters/AttackOneShot/active = false
+parameters/AttackOneShot/internal_active = false
+parameters/AttackOneShot/request = 0
+parameters/ExtraOneShot/active = false
+parameters/ExtraOneShot/internal_active = false
+parameters/ExtraOneShot/request = 0
+
+[node name="StateMachineCore" parent="." index="6" node_paths=PackedStringArray("initial_state")]
 initial_state = NodePath("EnemyIdleState")
 
 [node name="EnemyIdleState" type="Node" parent="StateMachineCore" index="0"]
@@ -146,17 +159,5 @@ metadata/_custom_type_script = "uid://c8t47sv3bk5vo"
 [node name="CombatReadyState" type="Node" parent="StateMachineCore" index="2"]
 script = ExtResource("8_d7nfc")
 metadata/_custom_type_script = "uid://dfucs6atg31lh"
-
-[node name="AnimationTree" type="AnimationTree" parent="." index="5"]
-unique_name_in_owner = true
-root_node = NodePath("%3DModel/Skeleton_Mage")
-tree_root = SubResource("AnimationNodeBlendTree_lx6ub")
-anim_player = NodePath("../3DModel/Skeleton_Mage/AnimationPlayer")
-parameters/AttackOneShot/active = false
-parameters/AttackOneShot/internal_active = false
-parameters/AttackOneShot/request = 0
-parameters/ExtraOneShot/active = false
-parameters/ExtraOneShot/internal_active = false
-parameters/ExtraOneShot/request = 0
 
 [editable path="3DModel/Skeleton_Mage"]

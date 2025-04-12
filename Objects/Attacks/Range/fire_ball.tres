@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="AttackClass" load_steps=3 format=3 uid="uid://cyrujqbq74axg"]
+[gd_resource type="Resource" script_class="AttackClass" load_steps=4 format=3 uid="uid://cyrujqbq74axg"]
 
-[ext_resource type="Script" uid="uid://xkpakgeelgti" path="res://Objects/Actors/Enemies/Attacks/attack_script.gd" id="1_dj13q"]
+[ext_resource type="Script" uid="uid://xkpakgeelgti" path="res://Objects/Attacks/attack_script.gd" id="1_dj13q"]
 [ext_resource type="Script" uid="uid://dsgjo3noo457w" path="res://Objects/Effects/effect_script.gd" id="1_or575"]
+[ext_resource type="PackedScene" uid="uid://dspqswgx4ksf4" path="res://Objects/Projectiles/Fireball/fireball.tscn" id="2_2uop0"]
 
 [resource]
 script = ExtResource("1_dj13q")
@@ -10,4 +11,7 @@ prefered_range = 15.0
 too_close_range = 4.0
 damage_to_deal = 40
 effects = Array[ExtResource("1_or575")]([])
+attack_is_looping = false
+creates_projectile = true
+projectile = ExtResource("2_2uop0")
 metadata/_custom_type_script = "uid://xkpakgeelgti"

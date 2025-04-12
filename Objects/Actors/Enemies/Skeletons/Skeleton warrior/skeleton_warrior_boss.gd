@@ -15,6 +15,7 @@ func sub_class_update(delta) -> void:
 
 func sub_class_physics_update(delta) -> void:
 	if skin.attack_state_machine.get_current_node() == "Spinning":
+		can_damage(true)
 		chase_target()
 		movement_component.allow_rotation = false
 		if awareness_component.target:
@@ -25,8 +26,11 @@ func sub_class_physics_update(delta) -> void:
 func chase_target() -> void:
 	if awareness_component.target:
 		var distance_from_target := global_position.distance_to(awareness_component.target.position)
-		if distance_from_target < 3.0:
+		if distance_from_target < 3.0 or await enemy_weapon.hit_something:
+			var ending_timer = get_tree().create_timer(0.3)
+			await ending_timer.timeout
 			skin.end_looping_action()
+			can_damage(false)
 			current_temp_effect.revert_effect(self)
 			movement_component.allow_rotation = true
 

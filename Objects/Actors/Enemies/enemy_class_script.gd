@@ -12,12 +12,15 @@ extends CharacterBody3D
 
 @export var list_of_attacks:Array[AttackClass]
 
+@export var enemy_weapon:WeaponClass
+
 var is_starting_jumping := false
 var is_sprinting := false
 var defend := false
 var on_ground_last_frame := true
 
 var current_temp_effect:EffectClass
+var current_projectile_attack:AttackClass
 
 func _ready():
 	sub_class_ready()
@@ -53,6 +56,8 @@ func check_attack_possibilities():
 		if valid_attacks.size() > 0:
 			var random_attack = valid_attacks[randi_range(0, valid_attacks.size() -1)]
 			skin.attack(random_attack)
+			if random_attack.creates_projectile:
+				current_projectile_attack = random_attack
 			trigger_attack_effects_on_self(random_attack)
 			if !skin.waiting_looping_action_end:
 				start_attack_timer()
@@ -83,6 +88,17 @@ func hit():
 		skin.hit()
 		skin.do_squash_and_stretch(1.2, 0.5)
 		movement_component.stop_movement(0.1, 0.6)
+
+func can_damage(value:bool):
+	enemy_weapon.can_damage = value
+
+func create_projectile():
+	if current_projectile_attack:
+		var new_projectile:Node3D =  current_projectile_attack.projectile.instantiate()
+		get_tree().root.add_child(new_projectile)
+		new_projectile.look_at_from_position(enemy_weapon.projectile_point.global_position, awareness_component.target.global_position, Vector3.UP, true)
+		new_projectile.rotation.y = new_projectile.rotation.y
+		new_projectile.direction = global_position.direction_to(awareness_component.target.global_position)
 
 func sub_class_ready() -> void:
 	pass
