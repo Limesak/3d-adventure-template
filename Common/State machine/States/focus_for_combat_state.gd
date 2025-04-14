@@ -17,7 +17,7 @@ func update_state(_delta:float):
 		transitioned.emit(self, "EnemyIdleState")
 	
 	var distance_to_target := parent_enemy.global_position.distance_to(target.global_position)
-	var should_reposition:bool
+	var should_reposition := false
 	var previous_attack:AttackClass
 	for attack in parent_enemy.list_of_attacks:
 		var attack_to_compare:AttackClass
@@ -25,10 +25,8 @@ func update_state(_delta:float):
 			attack_to_compare = previous_attack if previous_attack.prefered_range > attack.prefered_range else attack
 		else:
 			attack_to_compare = attack
-		if distance_to_target > attack_to_compare.prefered_range:
+		if distance_to_target > attack_to_compare.prefered_range or distance_to_target <= attack_to_compare.too_close_range:
 			should_reposition = true
-		else:
-			should_reposition = false
 		previous_attack = attack
 	
 	if should_reposition:

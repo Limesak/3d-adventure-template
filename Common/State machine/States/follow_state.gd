@@ -37,8 +37,9 @@ func update_state_physics(delta:float):
 		transitioned.emit(self, "EnemyIdleState")
 
 func find_position_in_radius():
+	var rng := RandomNumberGenerator.new( )
 	var r = wanted_distance_from_target * sqrt(randf())
 	var theta := randf() * 2 * PI
-	wanted_position.x = target.global_position.x + r + cos(theta)
-	wanted_position.z = target.global_position.z + r + cos(theta)
+	wanted_position.x = target.global_position.x + (r * cos(theta))
+	wanted_position.z = target.global_position.z + (r * cos(theta))
 	timer_check_position.start()
